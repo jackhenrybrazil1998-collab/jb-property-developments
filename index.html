@@ -265,7 +265,7 @@ a{text-decoration:none}
     <a href="mailto:j.bpropertydevelopments01@gmail.com"><small>EMAIL</small><b>j.bpropertydevelopments01@gmail.com</b></a>
    </div>
   </div>
-  <form id="quoteForm">
+  <form action="https://formsubmit.co/j.bpropertydevelopments01@gmail.com" method="POST">
    <label>Name<input required name="name" placeholder="Your name"></label>
    <label>Phone<input required name="phone" placeholder="Your phone number"></label>
    <label>Email<input type="email" name="email" placeholder="Your email address"></label>
@@ -291,10 +291,10 @@ const menu=document.querySelector('.menu'), mobile=document.querySelector('.mobi
 menu.addEventListener('click',()=>mobile.style.display=mobile.style.display==='block'?'none':'block');
 document.querySelectorAll('.mobile-nav a').forEach(a=>a.addEventListener('click',()=>mobile.style.display='none'));
 document.getElementById('year').textContent=new Date().getFullYear();
-document.getElementById('quoteForm').addEventListener('submit',e=>{
- e.preventDefault();
- document.getElementById('note').textContent='Thanks — your enquiry form is ready to be connected to your email or website form service.';
-});
+
+ 
+ 
+
 const box=document.getElementById('lightbox'), boxImg=document.getElementById('lightboxImg');
 document.querySelectorAll('.photo').forEach(p=>p.addEventListener('click',()=>{
  boxImg.src=p.dataset.full; boxImg.alt=p.querySelector('img').alt; box.classList.add('open'); box.setAttribute('aria-hidden','false');
