@@ -1,0 +1,35 @@
+name: Install consent-based analytics tracking
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - cookie-consent.js
+      - cookies.html
+      - patch_site.py
+      - .github/workflows/install-analytics.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  add-to-pages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Add consent script to all pages
+        run: python3 patch_site.py
+      - name: Commit updated website pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- '*.html'
+          if ! git diff --cached --quiet; then
+            git commit -m "Add consent-gated analytics across website"
+            git push
+          else
+            echo "All pages already updated."
+          fi
