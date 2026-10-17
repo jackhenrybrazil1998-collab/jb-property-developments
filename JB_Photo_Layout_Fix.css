@@ -1,0 +1,136 @@
+/*
+   J.B Property Developments — photo layout fix (October 2026)
+   Homepage: consistent thumbnail cards on desktop, laptop, tablet and phone.
+   Keeps all original image files, captions and click-to-enlarge behaviour.
+*/
+
+/* About section: keep the feature photograph balanced with the text. */
+#about .about-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 56px);
+  align-items: center;
+}
+#about .feature-photo {
+  width: 100%;
+  min-width: 0;
+  max-width: 560px;
+  overflow: hidden;
+  border-radius: 12px;
+}
+#about .feature-photo img {
+  display: block;
+  width: 100%;
+  height: clamp(220px, 27vw, 340px);
+  max-height: 340px;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Keep the drone illustration a manageable size on a laptop. */
+#work .drone-photo {
+  min-width: 0;
+  max-width: 100%;
+}
+#work .drone-photo img {
+  display: block;
+  width: 100%;
+  height: clamp(240px, 27vw, 340px);
+  min-height: 0;
+  max-height: 340px;
+  object-fit: cover;
+}
+
+/* The original page was missing the main desktop gallery rules. */
+#work .gallery {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  grid-auto-rows: auto !important;
+  align-items: stretch;
+  gap: 16px !important;
+  width: 100% !important;
+  margin: 0 auto;
+  padding: 0;
+}
+#work .gallery .photo,
+#work .gallery .photo.tall,
+#work .gallery .photo.wide {
+  box-sizing: border-box;
+  display: block;
+  position: relative;
+  grid-column: auto !important;
+  grid-row: auto !important;
+  width: 100% !important;
+  min-width: 0;
+  max-width: none;
+  min-height: 0 !important;
+  height: auto !important;
+  aspect-ratio: 5 / 4 !important;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #18232d;
+  text-align: left;
+  cursor: zoom-in;
+  box-shadow: 0 4px 14px rgba(12, 23, 36, .12);
+}
+#work .gallery .photo img {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center;
+  transition: transform .2s ease;
+}
+#work .gallery .photo span {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  padding: 25px 12px 11px;
+  background: linear-gradient(0deg, rgba(10, 19, 28, .85), transparent);
+  color: white;
+  font: 700 13px/1.3 Arial, Helvetica, sans-serif;
+}
+#work .gallery .photo:hover img { transform: scale(1.025); }
+#work .gallery .photo:focus-visible {
+  outline: 3px solid #be863d;
+  outline-offset: 3px;
+}
+
+/* Centre the final pair of thumbnails in a four-column desktop grid. */
+#work .gallery .photo:nth-last-child(2):nth-child(4n + 1) { grid-column: 2 !important; }
+
+/* Compact laptops and tablets: three columns. */
+@media (max-width: 980px) {
+  #about .about-grid { grid-template-columns: 1fr; }
+  #about .feature-photo { max-width: 100%; }
+  #work .gallery {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 14px !important;
+  }
+  #work .gallery .photo:nth-last-child(2):nth-child(4n + 1) { grid-column: auto !important; }
+  #work .gallery .photo:last-child:nth-child(3n + 1) { grid-column: 2 !important; }
+}
+
+/* Phone: two compact square previews per row, instead of giant photos. */
+@media (max-width: 650px) {
+  #about .feature-photo img { height: 210px; max-height: 210px; }
+  #work .drone-photo img { height: 230px; max-height: 230px; }
+  #work .gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+  #work .gallery .photo,
+  #work .gallery .photo.tall,
+  #work .gallery .photo.wide { aspect-ratio: 1 / 1 !important; }
+  #work .gallery .photo:last-child:nth-child(3n + 1) { grid-column: auto !important; }
+  #work .gallery .photo span { padding: 22px 8px 8px; font-size: 11px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #work .gallery .photo img { transition: none; }
+}
