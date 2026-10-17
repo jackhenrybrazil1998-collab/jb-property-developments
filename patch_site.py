@@ -7398,3 +7398,141 @@ for _jb_page, (_jb_fname, _jb_desc) in ILLUSTRATION_PLACEMENTS.items():
 if _jb_new_photo_paths and (root / ".git").exists():
     _jb_subprocess.run(["git", "add", "--", *_jb_new_photo_paths], cwd=str(root), check=True)
 print("New illustrative photo assets:", len(_jb_new_photo_paths), "; pages with supporting visuals:", len(ILLUSTRATION_PLACEMENTS))
+
+
+# ---------------------------------------------------------------------------
+# 17 October 2026: site-wide navigation and small mobile usability refinements.
+# Preserve all earlier unique content, authentic photographs and illustrations.
+# All destination URLs already exist on the published website.
+# ---------------------------------------------------------------------------
+JB_NAV_TAG = 'data-jb-crossnav="2026-10-17"'
+JB_NAV_CSS_ID = 'jb-2026-crossnav-css'
+JB_NAV_AREAS = [
+    ('Barnes', 'roofers-barnes.html'),
+    ('Chiswick', 'roofers-chiswick.html'),
+    ('Brentford', 'roofers-brentford.html'),
+    ('Kew', 'roofers-kew.html'),
+    ('Hammersmith', 'roofers-hammersmith.html'),
+    ('Mortlake', 'roofers-mortlake.html'),
+    ('East Sheen', 'roofers-east-sheen.html'),
+    ('West London', 'roofers-west-london.html'),
+]
+JB_NAV_SERVICES = [
+    ('Roof Repairs & Emergency Roofing', 'roof-repairs.html'),
+    ('Flat Roofs & Felt Roofing', 'flat-roofing.html'),
+    ('New Roofs & Roof Replacement', 'new-roofs.html'),
+    ('Chimneys & Leadwork', 'chimney-leadwork.html'),
+    ('Gutter Cleaning, Fascias & Soffits', 'guttering-fascias-soffits.html'),
+    ('Free Drone Roof Inspections', 'free-drone-inspections.html'),
+]
+JB_NAV_CSS = """<style id="jb-2026-crossnav-css">
+.jb-crossnav{background:#f7f5f0;color:#17202a;padding:42px 0;border-top:1px solid #e2ded5}
+.jb-crossnav .jb-crossnav-inner{width:min(1100px,calc(100% - 40px));margin:auto}
+.jb-crossnav h2{font-size:clamp(25px,3.8vw,36px);line-height:1.2;margin:0 0 12px;color:#17202a}
+.jb-crossnav p{max-width:750px;margin:0 0 20px;line-height:1.65}
+.jb-crossnav h3{font-size:20px;line-height:1.3;margin:27px 0 12px;color:#17202a}
+.jb-crossnav .jb-nav-links{display:flex;gap:10px;flex-wrap:wrap}
+.jb-crossnav .jb-nav-links a{background:white;border:1px solid #d8d1c4;border-radius:6px;color:#17202a;padding:10px 14px;text-decoration:none;line-height:1.4;display:inline-flex;align-items:center;min-height:44px}
+.jb-crossnav .jb-nav-links a:hover,.jb-crossnav .jb-nav-links a:focus-visible{border-color:#a26b29;text-decoration:underline;outline-offset:2px}
+@media(max-width:740px){
+ .jb-crossnav{padding:35px 0}
+ .jb-crossnav .jb-crossnav-inner{width:min(1100px,calc(100% - 28px))}
+ .jb-crossnav .jb-nav-links a{font-size:15px;padding:9px 12px}
+ #jb-cookie-trigger{left:auto!important;right:8px!important;bottom:8px!important;font-size:10px!important;padding:5px 7px!important;max-width:115px;line-height:1.2!important;opacity:.86!important}
+}
+</style>"""
+JB_COOKIE_ONLY = """<style id="jb-2026-cookie-mobile-css">@media(max-width:740px){
+#jb-cookie-trigger{left:auto!important;right:8px!important;bottom:8px!important;font-size:10px!important;padding:5px 7px!important;max-width:115px;line-height:1.2!important;opacity:.86!important}
+}</style>"""
+JB_HOMEPAGE_STRIP_CSS = """<style id="jb-2026-home-mobile-strip">@media(max-width:740px){
+.strip-inner{flex-wrap:wrap!important;justify-content:center!important;gap:8px 16px!important;padding:12px 5px!important;line-height:1.6!important}
+.strip-inner span{font-size:10px!important;letter-spacing:1px!important;white-space:normal!important;text-align:center!important}
+}</style>"""
+
+def jb_crossnav_page(page):
+    is_area = page.startswith('roofers-') and page != 'roofers-west-london.html'
+    is_service = page in {u for _t,u in JB_NAV_SERVICES}
+    # Barnes and Chiswick already contain every service link. Add just the missing areas.
+    if page in ('roofers-barnes.html','roofers-chiswick.html'):
+        heading = 'Other West London roofing areas'
+        desc = 'We also welcome roofing enquiries from neighbouring communities. Choose another area below to read its local roofing information.'
+        services = []
+    elif is_area:
+        heading = 'Explore our roofing services and other areas'
+        desc = 'Find detailed help for the type of roof work you need, or choose another community we cover.'
+        services = [(t,u) for t,u in JB_NAV_SERVICES]
+    elif is_service:
+        heading = 'Related roofing services and areas we cover'
+        desc = 'Different roof problems can involve more than one part of a property. Browse related services or choose your local roofing page.'
+        services = [(t,u) for t,u in JB_NAV_SERVICES if u!=page]
+    else:
+        raise AssertionError('Unexpected navigation page: '+page)
+    areas = [(t,u) for t,u in JB_NAV_AREAS if u!=page]
+    def links(rows):
+        return ''.join('<a href="/'+u+'">'+t+'</a>' for t,u in rows)
+    service_block = ('<h3>Roofing services</h3><nav class="jb-nav-links" aria-label="Related roofing services">'+links(services)+'</nav>') if services else ''
+    return ('<section class="jb-crossnav" '+JB_NAV_TAG+'><div class="jb-crossnav-inner">'
+            '<h2>'+heading+'</h2><p>'+desc+'</p>'+service_block
+            +'<h3>Other roofing areas</h3><nav class="jb-nav-links" aria-label="Roofing areas covered">'
+            +links(areas)+'</nav></div></section>')
+
+# Sections that existed before the new complete navigation were shorter and, on
+# several pages, appeared before useful roofing advice. Replace, don't duplicate.
+JB_OLD_NAV_HEADINGS = (
+    'Other nearby roofing areas',
+    'Roofing services you can ask us about',
+    'Other roofing services',
+)
+
+for jb_page in [
+    'index.html', 'roofers-barnes.html','roofers-chiswick.html',
+    'roofers-brentford.html','roofers-kew.html','roofers-hammersmith.html',
+    'roofers-mortlake.html','roofers-east-sheen.html','roofers-west-london.html',
+    'roof-repairs.html','flat-roofing.html','new-roofs.html','chimney-leadwork.html',
+    'guttering-fascias-soffits.html','free-drone-inspections.html',
+]:
+    jb_path = root / jb_page
+    jb_before = jb_path.read_text(encoding='utf-8')
+    jb_html = jb_before
+    if JB_NAV_CSS_ID not in jb_html:
+        jb_html = jb_html.replace('</head>',JB_NAV_CSS+'\n</head>',1)
+    if jb_page == 'index.html':
+        if 'id="jb-2026-home-mobile-strip"' not in jb_html:
+            jb_html = jb_html.replace('</head>',JB_HOMEPAGE_STRIP_CSS+'\n</head>',1)
+        assert all(('/'+u) in jb_html for _t,u in JB_NAV_AREAS), 'Homepage area links changed'
+        assert all(('/'+u) in jb_html for _t,u in JB_NAV_SERVICES), 'Homepage service links changed'
+    elif jb_page == 'roofers-west-london.html':
+        # Already contains all seven dedicated local links and all six services.
+        assert all(('/'+u) in jb_html for _t,u in JB_NAV_AREAS if u!=jb_page)
+        assert all(('/'+u) in jb_html for _t,u in JB_NAV_SERVICES)
+    else:
+        if JB_NAV_TAG not in jb_html:
+            if jb_page not in ('roofers-barnes.html','roofers-chiswick.html'):
+                for jb_heading in JB_OLD_NAV_HEADINGS:
+                    jb_regex = (r'<section\b[^>]*>\s*<div class="container">\s*'
+                                r'<h2>'+re.escape(jb_heading)+r'</h2>[\s\S]*?</section>\s*')
+                    jb_html, jb_n = re.subn(jb_regex, '', jb_html, count=1)
+                    if jb_heading == 'Other roofing services' and jb_page in {u for _t,u in JB_NAV_SERVICES}:
+                        assert jb_n==1, 'Old service navigation missing on '+jb_page
+            jb_block = jb_crossnav_page(jb_page)
+            if jb_page in ('roofers-barnes.html','roofers-chiswick.html'):
+                assert jb_html.count('</main>')==1
+                jb_html = jb_html.replace('</main>', jb_block+'\n</main>',1)
+            else:
+                assert jb_html.count('<section class="cta">')==1, 'No call-to-action placement in '+jb_page
+                jb_html = jb_html.replace('<section class="cta">', jb_block+'\n<section class="cta">',1)
+        assert jb_html.count(JB_NAV_TAG)==1, 'Navigation inserted more than once: '+jb_page
+        for _label,jb_dest in JB_NAV_AREAS:
+            if jb_dest!=jb_page:
+                assert 'href="/'+jb_dest+'"' in jb_html, 'Missing area '+jb_dest+' on '+jb_page
+        for _label,jb_dest in JB_NAV_SERVICES:
+            if jb_dest!=jb_page:
+                assert 'href="/'+jb_dest+'"' in jb_html, 'Missing service '+jb_dest+' on '+jb_page
+    assert len(re.findall(r'<h1\b',jb_html,flags=re.I)) == len(re.findall(r'<h1\b',jb_before,flags=re.I))
+    assert re.findall(r'<link[^>]*rel=["\']canonical["\'][^>]*>',jb_html,flags=re.I)==re.findall(r'<link[^>]*rel=["\']canonical["\'][^>]*>',jb_before,flags=re.I)
+    assert jb_html.count('src="/cookie-consent.js"')==jb_before.count('src="/cookie-consent.js"')
+    assert jb_html.count('data-jb-illustration="2026-10"')==jb_before.count('data-jb-illustration="2026-10"')
+    if jb_html!=jb_before:
+        jb_path.write_text(jb_html,encoding='utf-8')
+        print('Improved navigation/mobile layout:',jb_page)
+print('Completed navigation coverage audit: all 15 SEO pages checked, without adding new doorway pages')
