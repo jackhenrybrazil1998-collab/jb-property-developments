@@ -139,7 +139,22 @@
     banner.hidden = !!prefs;
   }
 
+
+  // Measure contact-link clicks as engagement events, not as confirmed calls.
+  function setupContactClickTracking() {
+    document.addEventListener("click", function (event) {
+      const link = event.target && event.target.closest ? event.target.closest('a[href^="tel:"]') : null;
+      if (!link || !window.gtag || !prefs || !prefs.analytics) return;
+      window.gtag("event", "phone_click", {
+        event_category: "contact",
+        link_url: link.getAttribute("href"),
+        link_text: (link.textContent || "").trim().slice(0, 80)
+      });
+    });
+  }
+
   if (prefs) loadGoogle();
+  setupContactClickTracking();
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", setupUI);
   } else {
