@@ -148,6 +148,18 @@ a{text-decoration:none}
 .jb-emergency-banner .jb-emergency-mobile-number{font-size:22px;font-weight:800;letter-spacing:.25px;white-space:nowrap;line-height:1.25}
 .jb-emergency-banner .jb-emergency-mobile:hover,.jb-emergency-banner .jb-emergency-mobile:focus-visible{background:rgba(255,255,255,.18);outline:3px solid #fff;outline-offset:3px}
 @media(max-width:700px){.jb-emergency-banner{padding:20px 18px;gap:16px;margin:8px 0 21px}.jb-emergency-banner .jb-emergency-copy{flex-basis:100%}.jb-emergency-banner .jb-emergency-contacts{flex:1 1 100%;width:100%}.jb-emergency-banner .jb-emergency-call{width:100%;min-width:0}.jb-emergency-banner .jb-emergency-number{font-size:23px}}
+
+/* Compact company introduction video in the About J.B section. */
+.jb-about-video-strip{width:min(100%,900px);margin:42px auto 0;padding:22px 24px;display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:30px;align-items:center;border:1px solid rgba(255,255,255,.15);background:#182733;border-radius:16px;box-shadow:0 10px 25px rgba(0,0,0,.12)}
+.jb-about-video-media{min-width:0}
+.jb-about-video-media video{display:block;width:100%;max-width:340px;max-height:240px;aspect-ratio:16/9;object-fit:contain;background:#0a1119;border-radius:10px}
+.jb-about-video-copy{min-width:0}
+.jb-about-video-copy .eyebrow{margin-bottom:10px;color:#dfb77d}
+.jb-about-video-copy h3{font-size:clamp(22px,2.5vw,30px);line-height:1.16;color:#fff;letter-spacing:-.5px;margin:0 0 12px}
+.jb-about-video-copy p{font-size:15px;line-height:1.6;color:#dce3e9;margin:0 0 17px}
+.jb-about-video-copy .jb-about-video-link{display:inline-flex;color:#f1c381;font-size:14px;font-weight:800;text-decoration:underline;text-underline-offset:4px}
+.jb-about-video-copy .jb-about-video-link:hover,.jb-about-video-copy .jb-about-video-link:focus-visible{color:#fff}
+@media(max-width:700px){.jb-about-video-strip{grid-template-columns:minmax(0,1fr);gap:18px;margin-top:28px;padding:18px}.jb-about-video-media video{max-width:100%;max-height:225px}.jb-about-video-copy h3{font-size:23px}.jb-about-video-copy p{font-size:14px}}
 </style>
 <script type="application/ld+json">
 {
@@ -236,9 +248,6 @@ a{text-decoration:none}
     </a>
    </div>
   </aside>
-  <video controls playsinline style="width:100%;max-width:420px;border-radius:14px;margin:20px 0;">
-<source src="JB-Property-Developments-Andy-Website-Video.mp4.MP4" type="video/mp4">
-</video>
   <div class="eyebrow">J.B PROPERTY DEVELOPMENTS</div>
   <h1>Roofers in <em>West London.</em></h1>
   <p>Professional roof repairs, new roofs, flat roofing, gutter repairs, chimney and leadwork, and free drone roof inspections where suitable. Serving <strong>Barnes, Chiswick, Brentford, Kew, Hammersmith, Mortlake, East Sheen and surrounding West London areas.</strong> Contact us about 24/7 emergency roofing enquiries.</p>
@@ -303,6 +312,20 @@ Explore our roofing services:
    <a class="text-link" href="#contact">Discuss your project →</a>
   </div>
   <div class="feature-photo"><img src="assets/IMG_0033.jpeg" alt="J.B Property Developments roofing project"></div> 
+ </div>
+ <div class="jb-about-video-strip">
+  <div class="jb-about-video-media">
+   <video controls playsinline preload="metadata" aria-label="J.B Property Developments company introduction video">
+    <source src="JB-Property-Developments-Andy-Website-Video.mp4.MP4" type="video/mp4">
+    Your browser does not support this video.
+   </video>
+  </div>
+  <div class="jb-about-video-copy">
+   <div class="eyebrow">GET TO KNOW J.B</div>
+   <h3>Take a closer look at J.B Property Developments.</h3>
+   <p>Watch our short company introduction and learn more about our roofing and property services across Barnes, Chiswick and West London.</p>
+   <a href="tel:08000075438" class="jb-about-video-link" aria-label="Call J.B Property Developments on 0800 007 5438">Call us for a free quotation →</a>
+  </div>
  </div>
 </section>
 <div style="text-align:center; padding:30px 20px;">
