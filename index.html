@@ -131,6 +131,18 @@ a{text-decoration:none}
 @media (max-width:800px){.drone-section{grid-template-columns:1fr}.drone-card h3{font-size:25px}.drone-photo img{min-height:250px}}
 @media (max-width:800px){.cards{grid-template-columns:1fr}.cards article:nth-child(10),.cards article:nth-child(11){grid-column:auto}}
  @media (max-width:800px){.gallery{grid-template-columns:1fr!important;width:100%!important}.gallery .photo,.gallery .photo.tall,.gallery .photo.wide{width:100%!important;height:auto!important;min-height:0!important;grid-column:auto!important;grid-row:auto!important;aspect-ratio:4/3}.gallery .photo img{width:100%!important;height:100%!important;object-fit:cover!important}}
+
+/* Prominent emergency enquiry panel above the homepage introduction video */
+.jb-emergency-banner{position:relative;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:22px;max-width:1040px;margin:12px 0 24px;padding:24px 28px;background:linear-gradient(120deg,#1c3440,#12242f);border:1px solid rgba(255,206,131,.45);border-left:5px solid #f5b85e;border-radius:14px;box-shadow:0 12px 26px rgba(0,0,0,.2)}
+.jb-emergency-banner .jb-emergency-copy{flex:1 1 370px;min-width:0}
+.jb-emergency-banner .jb-emergency-eyebrow{display:block;color:#ffd08a;font-weight:800;font-size:11px;letter-spacing:1.6px;margin-bottom:8px}
+.jb-emergency-banner h2{font-size:clamp(22px,3vw,30px);line-height:1.17;letter-spacing:-.5px;color:#fff}
+.jb-emergency-banner p{font-size:14px;line-height:1.6;color:#edf0f2;margin:10px 0 0;max-width:680px}
+.jb-emergency-banner .jb-emergency-call{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:14px 22px;min-height:65px;min-width:230px;background:#ffcc79;color:#17212b;border-radius:9px;border:2px solid #ffe0ab;font-weight:800;box-shadow:0 4px 0 rgba(0,0,0,.2);text-decoration:none}
+.jb-emergency-banner .jb-emergency-call:hover,.jb-emergency-banner .jb-emergency-call:focus-visible{background:#ffe0a6;outline:3px solid #fff;outline-offset:3px}
+.jb-emergency-banner .jb-emergency-call-label{font-size:12px;letter-spacing:.8px;text-transform:uppercase}
+.jb-emergency-banner .jb-emergency-number{font-size:23px;letter-spacing:.25px;line-height:1.2;white-space:nowrap}
+@media(max-width:700px){.jb-emergency-banner{padding:20px 18px;gap:16px;margin:8px 0 21px}.jb-emergency-banner .jb-emergency-copy{flex-basis:100%}.jb-emergency-banner .jb-emergency-call{width:100%;min-width:0}.jb-emergency-banner .jb-emergency-number{font-size:23px}}
 </style>
 <script type="application/ld+json">
 {
@@ -202,6 +214,17 @@ a{text-decoration:none}
 <section class="hero">
  <div class="hero-bg"></div>
  <div class="container hero-inner">
+  <aside class="jb-emergency-banner" aria-label="24 hour emergency roofing contact">
+   <div class="jb-emergency-copy">
+    <span class="jb-emergency-eyebrow">24/7 EMERGENCY ROOFING ENQUIRIES</span>
+    <h2>Emergency roof leak or urgent repair?</h2>
+    <p>If you have a leaking roof, storm damage or water entering your property, call J.B Property Developments any time, day or night. We cover Barnes, Chiswick and surrounding West London. Emergency attendance is subject to availability and conditions.</p>
+   </div>
+   <a class="jb-emergency-call" href="tel:08000075438" aria-label="Call J.B Property Developments on 0800 007 5438">
+    <span class="jb-emergency-call-label">☎ Call us now — 24/7</span>
+    <span class="jb-emergency-number">0800 007 5438</span>
+   </a>
+  </aside>
   <video controls playsinline style="width:100%;max-width:420px;border-radius:14px;margin:20px 0;">
 <source src="JB-Property-Developments-Andy-Website-Video.mp4.MP4" type="video/mp4">
 </video>
