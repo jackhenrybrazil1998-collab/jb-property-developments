@@ -142,7 +142,12 @@ a{text-decoration:none}
 .jb-emergency-banner .jb-emergency-call:hover,.jb-emergency-banner .jb-emergency-call:focus-visible{background:#ffe0a6;outline:3px solid #fff;outline-offset:3px}
 .jb-emergency-banner .jb-emergency-call-label{font-size:12px;letter-spacing:.8px;text-transform:uppercase}
 .jb-emergency-banner .jb-emergency-number{font-size:23px;letter-spacing:.25px;line-height:1.2;white-space:nowrap}
-@media(max-width:700px){.jb-emergency-banner{padding:20px 18px;gap:16px;margin:8px 0 21px}.jb-emergency-banner .jb-emergency-copy{flex-basis:100%}.jb-emergency-banner .jb-emergency-call{width:100%;min-width:0}.jb-emergency-banner .jb-emergency-number{font-size:23px}}
+.jb-emergency-banner .jb-emergency-contacts{display:flex;flex-direction:column;gap:10px;flex:0 0 245px;max-width:100%}
+.jb-emergency-banner .jb-emergency-mobile{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:62px;padding:10px 18px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.48);border-radius:9px;color:#fff;text-decoration:none}
+.jb-emergency-banner .jb-emergency-mobile-label{font-size:12px;font-weight:800;letter-spacing:.9px;text-transform:uppercase;color:#ffd08a}
+.jb-emergency-banner .jb-emergency-mobile-number{font-size:22px;font-weight:800;letter-spacing:.25px;white-space:nowrap;line-height:1.25}
+.jb-emergency-banner .jb-emergency-mobile:hover,.jb-emergency-banner .jb-emergency-mobile:focus-visible{background:rgba(255,255,255,.18);outline:3px solid #fff;outline-offset:3px}
+@media(max-width:700px){.jb-emergency-banner{padding:20px 18px;gap:16px;margin:8px 0 21px}.jb-emergency-banner .jb-emergency-copy{flex-basis:100%}.jb-emergency-banner .jb-emergency-contacts{flex:1 1 100%;width:100%}.jb-emergency-banner .jb-emergency-call{width:100%;min-width:0}.jb-emergency-banner .jb-emergency-number{font-size:23px}}
 </style>
 <script type="application/ld+json">
 {
@@ -217,13 +222,19 @@ a{text-decoration:none}
   <aside class="jb-emergency-banner" aria-label="24 hour emergency roofing contact">
    <div class="jb-emergency-copy">
     <span class="jb-emergency-eyebrow">24/7 EMERGENCY ROOFING ENQUIRIES</span>
-    <h2>Emergency roof leak or urgent repair?</h2>
-    <p>If you have a leaking roof, storm damage or water entering your property, call J.B Property Developments any time, day or night. We cover Barnes, Chiswick and surrounding West London. Emergency attendance is subject to availability and conditions.</p>
+    <h2>Emergency Roof Leaks &amp; Urgent Roof Repairs</h2>
+    <p>Got a leaking roof, storm damage or water entering your property? J.B Property Developments is here to help, day or night, 7 days a week. We provide emergency roofing assistance throughout Barnes, Chiswick and surrounding West London areas. For urgent roofing problems, call us now to discuss the quickest available assistance. Emergency attendance is subject to availability and conditions.</p>
    </div>
-   <a class="jb-emergency-call" href="tel:08000075438" aria-label="Call J.B Property Developments on 0800 007 5438">
-    <span class="jb-emergency-call-label">☎ Call us now — 24/7</span>
-    <span class="jb-emergency-number">0800 007 5438</span>
-   </a>
+   <div class="jb-emergency-contacts">
+    <a class="jb-emergency-call" href="tel:08000075438" aria-label="Call J.B Property Developments freephone on 0800 007 5438">
+     <span class="jb-emergency-call-label">☎ Freephone — Call Now 24/7</span>
+     <span class="jb-emergency-number">0800 007 5438</span>
+    </a>
+    <a class="jb-emergency-mobile" href="tel:07733516907" aria-label="Call J.B Property Developments mobile on 07733 516907">
+     <span class="jb-emergency-mobile-label">Mobile</span>
+     <span class="jb-emergency-mobile-number">07733 516907</span>
+    </a>
+   </div>
   </aside>
   <video controls playsinline style="width:100%;max-width:420px;border-radius:14px;margin:20px 0;">
 <source src="JB-Property-Developments-Andy-Website-Video.mp4.MP4" type="video/mp4">
