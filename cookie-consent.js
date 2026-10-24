@@ -14,30 +14,39 @@
         typeof old.when === "number" && Date.now() - old.when < EXPIRY_MS) {
       prefs = old;
     }
-  } catch (_) { /* No stored preference: ask before loading Google tags. */ }
+  } catch (_) { /* No stored preference: ask before setting optional cookies. */ }
+
+  // Consent Mode v2: initialise Google tags with optional consent denied.
+  // Google can detect the tag before a visitor grants consent, without optional cookies.
+  function consentState() {
+    return {
+      analytics_storage: prefs && prefs.analytics ? "granted" : "denied",
+      ad_storage: prefs && prefs.ads ? "granted" : "denied",
+      ad_user_data: prefs && prefs.ads ? "granted" : "denied",
+      ad_personalization: prefs && prefs.ads ? "granted" : "denied"
+    };
+  }
 
   function loadGoogle() {
-    if (!prefs || (!prefs.analytics && !prefs.ads)) return;
     window.dataLayer = window.dataLayer || [];
-    window.gtag = function () { window.dataLayer.push(arguments); };
+    window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
     window.gtag("consent", "default", {
-      analytics_storage: prefs.analytics ? "granted" : "denied",
-      ad_storage: prefs.ads ? "granted" : "denied",
-      ad_user_data: prefs.ads ? "granted" : "denied",
-      ad_personalization: prefs.ads ? "granted" : "denied"
+      analytics_storage: "denied",
+      ad_storage: "denied",
+      ad_user_data: "denied",
+      ad_personalization: "denied",
+      wait_for_update: 500
     });
+    if (prefs) window.gtag("consent", "update", consentState());
     window.gtag("js", new Date());
-    if (prefs.analytics) window.gtag("config", GA, { allow_google_signals: prefs.ads });
-    if (prefs.ads) {
-      window.gtag("config", ADS);
-      if (window.location.pathname.endsWith("/thank-you.html")) {
-        window.gtag("event", "conversion", { send_to: CONVERSION });
-      }
+    window.gtag("config", ADS);
+    window.gtag("config", GA, { allow_google_signals: !!(prefs && prefs.ads) });
+    if (prefs && prefs.ads && window.location.pathname.endsWith("/thank-you.html")) {
+      window.gtag("event", "conversion", { send_to: CONVERSION });
     }
     const tag = document.createElement("script");
     tag.async = true;
-    tag.src = "https://www.googletagmanager.com/gtag/js?id=" +
-      encodeURIComponent(prefs.analytics ? GA : ADS);
+    tag.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(ADS);
     document.head.appendChild(tag);
   }
 
@@ -60,7 +69,9 @@
     } catch (_) {
       document.getElementById("jb-cookie-banner").hidden = true;
       document.getElementById("jb-cookie-dialog-backdrop").hidden = true;
-      loadGoogle();
+      window.gtag("consent", "update", consentState());
+      window.gtag("config", GA, { allow_google_signals: !!prefs.ads });
+      window.gtag("config", ADS);
     }
   }
 
@@ -98,7 +109,7 @@
     banner.setAttribute("role", "region");
     banner.setAttribute("aria-label", "Cookie choices");
     banner.innerHTML =
-      '<strong>Your cookie choices</strong><p>We use optional Google Analytics to understand visits and Google Ads to measure enquiries. You can accept, reject or customise. <a href="/cookies.html">Cookie information</a>.</p>' +
+      '<strong>Your cookie choices</strong><p>Optional analytics and ad cookies need your permission. Google tags may send limited cookieless signals while consent is denied. Accept, reject or customise. <a href="/cookies.html">Cookie information</a>.</p>' +
       '<div class="jb-cookie-actions"><button type="button" class="jb-outline" id="jb-reject">Reject optional</button>' +
       '<button type="button" class="jb-outline" id="jb-customise">Customise</button>' +
       '<button type="button" id="jb-accept">Accept all</button></div>';
@@ -139,7 +150,7 @@
     banner.hidden = !!prefs;
   }
 
-  if (prefs) loadGoogle();
+  loadGoogle();
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", setupUI);
   } else {
